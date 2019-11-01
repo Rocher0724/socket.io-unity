@@ -9,7 +9,7 @@ using Socket.Quobject.SocketIoClientDotNet.Modules;
 using Socket.Quobject.SocketIoClientDotNet.Parser;
 
 namespace Socket.Quobject.SocketIoClientDotNet.Client {
-  public class Socket : Emitter {
+  public class QSocket : Emitter {
     public static readonly string EVENT_CONNECT = "connect";
     public static readonly string EVENT_DISCONNECT = "disconnect";
     public static readonly string EVENT_ERROR = "error";
@@ -23,16 +23,16 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
     public static readonly string EVENT_RECONNECTING = Manager.EVENT_RECONNECTING;
 
     private static readonly List<string> Events = new List<string>() {
-      Socket.EVENT_CONNECT,
-      Socket.EVENT_CONNECT_ERROR,
-      Socket.EVENT_CONNECT_TIMEOUT,
-      Socket.EVENT_DISCONNECT,
-      Socket.EVENT_ERROR,
-      Socket.EVENT_RECONNECT,
-      Socket.EVENT_RECONNECT_ATTEMPT,
-      Socket.EVENT_RECONNECT_FAILED,
-      Socket.EVENT_RECONNECT_ERROR,
-      Socket.EVENT_RECONNECTING
+      QSocket.EVENT_CONNECT,
+      QSocket.EVENT_CONNECT_ERROR,
+      QSocket.EVENT_CONNECT_TIMEOUT,
+      QSocket.EVENT_DISCONNECT,
+      QSocket.EVENT_ERROR,
+      QSocket.EVENT_RECONNECT,
+      QSocket.EVENT_RECONNECT_ATTEMPT,
+      QSocket.EVENT_RECONNECT_FAILED,
+      QSocket.EVENT_RECONNECT_ERROR,
+      QSocket.EVENT_RECONNECTING
     };
 
     private ImmutableDictionary<int, IAck> Acks = ImmutableDictionary.Create<int, IAck>();
@@ -44,7 +44,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
     private Manager _io;
     private ImmutableQueue<ClientOn.IHandle> Subs;
 
-    public Socket(Manager io, string nsp) {
+    public QSocket(Manager io, string nsp) {
       this._io = io;
       this.Nsp = nsp;
       this.SubEvents();
@@ -61,7 +61,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
         (IListener) new ListenerImpl((Action<object>) (data => this.OnClose((string) data)))));
     }
 
-    public Socket Open() {
+    public QSocket Open() {
       ThreadPool.QueueUserWorkItem((WaitCallback) (arg => {
         if (this.Connected)
           return;
@@ -72,18 +72,18 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       return this;
     }
 
-    public Socket Connect() {
+    public QSocket Connect() {
       return this.Open();
     }
 
-    public Socket Send(params object[] args) {
-      this.Emit(Socket.EVENT_MESSAGE, args);
+    public QSocket Send(params object[] args) {
+      this.Emit(QSocket.EVENT_MESSAGE, args);
       return this;
     }
 
     public override Emitter Emit(string eventString, params object[] args) {
       LogManager logger = LogManager.GetLogger(Global.CallerName("", 0, ""));
-      if (Socket.Events.Contains(eventString)) {
+      if (QSocket.Events.Contains(eventString)) {
         base.Emit(eventString, args);
         return (Emitter) this;
       }
@@ -161,7 +161,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
     private void OnClose(string reason) {
       LogManager.GetLogger(Global.CallerName("", 0, "")).Info(string.Format("close ({0})", (object) reason));
       this.Connected = false;
-      this.Emit(Socket.EVENT_DISCONNECT, (object) reason);
+      this.Emit(QSocket.EVENT_DISCONNECT, (object) reason);
     }
 
     private void OnPacket(Packet packet) {
@@ -181,7 +181,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
           this.OnAck(packet);
           break;
         case 4:
-          this.Emit(Socket.EVENT_ERROR, packet.Data);
+          this.Emit(QSocket.EVENT_ERROR, packet.Data);
           break;
         case 5:
           this.OnEvent(packet);
@@ -198,7 +198,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       logger.Info(string.Format("emitting event {0}", (object) dataAsList));
       if (packet.Id >= 0) {
         logger.Info("attaching ack callback to event");
-        dataAsList.Add((object) new Socket.AckImp(this, packet.Id));
+        dataAsList.Add((object) new QSocket.AckImp(this, packet.Id));
       }
 
       if (this.Connected) {
@@ -220,7 +220,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
 
     private void OnConnect() {
       this.Connected = true;
-      this.Emit(Socket.EVENT_CONNECT);
+      this.Emit(QSocket.EVENT_CONNECT);
       this.EmitBuffered();
     }
 
@@ -255,7 +255,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       this._io.Destroy(this);
     }
 
-    public Socket Close() {
+    public QSocket Close() {
       LogManager logger = LogManager.GetLogger(Global.CallerName("", 0, ""));
       if (this.Connected) {
         logger.Info(string.Format("performing disconnect ({0})", (object) this.Nsp));
@@ -268,7 +268,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       return this;
     }
 
-    public Socket Disconnect() {
+    public QSocket Disconnect() {
       return this.Close();
     }
 
@@ -295,10 +295,10 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
 
     private class AckImp : IAck {
       private readonly bool[] sent = new bool[1];
-      private Socket socket;
+      private QSocket socket;
       private int Id;
 
-      public AckImp(Socket socket, int id) {
+      public AckImp(QSocket socket, int id) {
         this.socket = socket;
         this.Id = id;
       }

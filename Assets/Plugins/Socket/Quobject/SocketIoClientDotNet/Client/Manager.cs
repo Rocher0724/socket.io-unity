@@ -36,11 +36,11 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
     private ConcurrentQueue<ClientOn.IHandle> Subs;
     private Quobject.EngineIoClientDotNet.Client.Socket.Options Opts;
     private bool AutoConnect;
-    private HashSet<Socket> OpeningSockets;
+    private HashSet<QSocket> OpeningSockets;
     public Quobject.EngineIoClientDotNet.Client.Socket EngineSocket;
     private Quobject.SocketIoClientDotNet.Parser.Parser.Encoder Encoder;
     private Quobject.SocketIoClientDotNet.Parser.Parser.Decoder Decoder;
-    private ImmutableDictionary<string, Socket> Nsps;
+    private ImmutableDictionary<string, QSocket> Nsps;
 
     public Manager()
       : this((Uri) null, (Options) null) {
@@ -61,7 +61,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       if (opts.Path == null)
         opts.Path = "/socket.io";
       this.Opts = (Quobject.EngineIoClientDotNet.Client.Socket.Options) opts;
-      this.Nsps = ImmutableDictionary.Create<string, Socket>();
+      this.Nsps = ImmutableDictionary.Create<string, QSocket>();
       this.Subs = new ConcurrentQueue<ClientOn.IHandle>();
       this.Reconnection(opts.Reconnection);
       this.ReconnectionAttempts(opts.ReconnectionAttempts != 0 ? opts.ReconnectionAttempts : int.MaxValue);
@@ -73,7 +73,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       this.Attempts = 0;
       this.Encoding = false;
       this.PacketBuffer = new List<Packet>();
-      this.OpeningSockets = new HashSet<Socket>();
+      this.OpeningSockets = new HashSet<QSocket>();
       this.Encoder = new Quobject.SocketIoClientDotNet.Parser.Parser.Encoder();
       this.Decoder = new Quobject.SocketIoClientDotNet.Parser.Parser.Decoder();
       this.AutoConnect = opts.AutoConnect;
@@ -238,15 +238,15 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       this.EmitAll(Manager.EVENT_ERROR, (object) err);
     }
 
-    public Socket Socket(string nsp) {
+    public QSocket Socket(string nsp) {
       if (this.Nsps.ContainsKey(nsp))
         return this.Nsps[nsp];
-      Socket socket = new Socket(this, nsp);
+      QSocket socket = new QSocket(this, nsp);
       this.Nsps = this.Nsps.Add(nsp, socket);
       return socket;
     }
 
-    internal void Destroy(Socket socket) {
+    internal void Destroy(QSocket socket) {
       this.OpeningSockets.Remove(socket);
       if (this.OpeningSockets.Count != 0)
         return;

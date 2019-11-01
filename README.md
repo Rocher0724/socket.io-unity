@@ -19,35 +19,16 @@ It's a C# file from a DLL inside a unity project.
 ```cs
 using Socket.Quobject.SocketIoClientDotNet.Client;
 
-var socket = IO.Socket("http://localhost:3000");
-socket.On(Socket.EVENT_CONNECT, () =>
-{
-  socket.Emit("hi");
-});
-socket.On("hi", (data) =>
-{
-  Debug.Log(data);
-  socket.Disconnect();
+QSocket socket = IO.Socket ("http://localhost:3000");
+
+socket.On (QSocket.EVENT_CONNECT, () => { socket.Emit ("hi"); });
+
+socket.On ("hi", (data) => {
+  Debug.Log (data);
+  socket.Disconnect ();
 });
 ```
-or, if this doesn't work the above way try this
 
-```cs
-using Socket.Quobject.SocketIoClientDotNet.Client;
-
-Socket.Quobject.SocketIoClientDotNet.Client socket 
-	= Socket.Quobject.SocketIoClientDotNet.IO.Socket("http://localhost:3000");
-
-socket.On(Socket.Quobject.SocketIoClientDotNet.Client.Socket.EVENT_CONNECT, () =>
-{
-  socket.Emit("hi");
-});
-socket.On("hi", (data) =>
-{
-  Debug.Log(data);
-  socket.Disconnect();
-});
-```
 
 
 ## Features
