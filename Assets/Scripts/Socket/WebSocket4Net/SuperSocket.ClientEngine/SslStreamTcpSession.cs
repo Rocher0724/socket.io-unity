@@ -20,7 +20,7 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
     }
 
     protected override void SocketEventArgsCompleted(object sender, SocketAsyncEventArgs e) {
-      this.ProcessConnect(sender as System.Net.Sockets.Socket, (object) null, e);
+      this.ProcessConnect(sender as global::System.Net.Sockets.Socket, (object) null, e);
     }
 
     protected override void OnGetSocket(SocketAsyncEventArgs e) {
@@ -87,7 +87,7 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
     }
 
     private void BeginRead() {
-      System.Net.Sockets.Socket client = this.Client;
+      global::System.Net.Sockets.Socket client = this.Client;
       if (client == null)
         return;
       if (this.m_SslStream == null)
@@ -148,7 +148,7 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
     }
 
     protected override void SendInternal(PosList<ArraySegment<byte>> items) {
-      System.Net.Sockets.Socket client = this.Client;
+      global::System.Net.Sockets.Socket client = this.Client;
       try {
         ArraySegment<byte> arraySegment = items[items.Position];
         this.m_SslStream.BeginWrite(arraySegment.Array, arraySegment.Offset, arraySegment.Count,
@@ -219,7 +219,7 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
     private class SslAsyncState {
       public SslStream SslStream { get; set; }
 
-      public System.Net.Sockets.Socket Client { get; set; }
+      public global::System.Net.Sockets.Socket Client { get; set; }
 
       public PosList<ArraySegment<byte>> SendingItems { get; set; }
     }

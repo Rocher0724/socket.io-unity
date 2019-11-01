@@ -1,16 +1,15 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
+using Socket.WebSocket4Net.CompilerServices;
 
 namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
-  [Extension]
   public static class ConnectAsyncExtension {
     private static void SocketAsyncEventCompleted(object sender, SocketAsyncEventArgs e) {
       e.Completed -= new EventHandler<SocketAsyncEventArgs>(ConnectAsyncExtension.SocketAsyncEventCompleted);
       ConnectAsyncExtension.ConnectToken userToken = (ConnectAsyncExtension.ConnectToken) e.UserToken;
       e.UserToken = (object) null;
-      userToken.Callback(sender as System.Net.Sockets.Socket, userToken.State, e);
+      userToken.Callback(sender as global::System.Net.Sockets.Socket, userToken.State, e);
     }
 
     private static SocketAsyncEventArgs CreateSocketAsyncEventArgs(
@@ -48,16 +47,16 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
       } else {
         SocketAsyncEventArgs socketAsyncEventArgs =
           ConnectAsyncExtension.CreateSocketAsyncEventArgs(remoteEndPoint, callback, state);
-        new System.Net.Sockets.Socket(remoteEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
+        new global::System.Net.Sockets.Socket(remoteEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
           .ConnectAsync(socketAsyncEventArgs);
       }
     }
 
     private static IPAddress GetNextAddress(
       ConnectAsyncExtension.DnsConnectState state,
-      out System.Net.Sockets.Socket attempSocket) {
+      out global::System.Net.Sockets.Socket attempSocket) {
       IPAddress ipAddress = (IPAddress) null;
-      attempSocket = (System.Net.Sockets.Socket) null;
+      attempSocket = (global::System.Net.Sockets.Socket) null;
       int nextAddressIndex = state.NextAddressIndex;
       while (attempSocket == null) {
         if (nextAddressIndex >= state.Addresses.Length)
@@ -79,19 +78,19 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
       try {
         hostAddresses = Dns.EndGetHostAddresses(result);
       } catch {
-        asyncState.Callback((System.Net.Sockets.Socket) null, asyncState.State, (SocketAsyncEventArgs) null);
+        asyncState.Callback((global::System.Net.Sockets.Socket) null, asyncState.State, (SocketAsyncEventArgs) null);
         return;
       }
 
       if (hostAddresses == null || hostAddresses.Length <= 0) {
-        asyncState.Callback((System.Net.Sockets.Socket) null, asyncState.State, (SocketAsyncEventArgs) null);
+        asyncState.Callback((global::System.Net.Sockets.Socket) null, asyncState.State, (SocketAsyncEventArgs) null);
       } else {
         asyncState.Addresses = hostAddresses;
         ConnectAsyncExtension.CreateAttempSocket(asyncState);
-        System.Net.Sockets.Socket attempSocket;
+        global::System.Net.Sockets.Socket attempSocket;
         IPAddress nextAddress = ConnectAsyncExtension.GetNextAddress(asyncState, out attempSocket);
         if (nextAddress == null) {
-          asyncState.Callback((System.Net.Sockets.Socket) null, asyncState.State, (SocketAsyncEventArgs) null);
+          asyncState.Callback((global::System.Net.Sockets.Socket) null, asyncState.State, (SocketAsyncEventArgs) null);
         } else {
           SocketAsyncEventArgs e = new SocketAsyncEventArgs();
           e.Completed += new EventHandler<SocketAsyncEventArgs>(ConnectAsyncExtension.SocketConnectCompleted);
@@ -109,17 +108,17 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
       ConnectAsyncExtension.DnsConnectState userToken = e.UserToken as ConnectAsyncExtension.DnsConnectState;
       if (e.SocketError == SocketError.Success) {
         ConnectAsyncExtension.ClearSocketAsyncEventArgs(e);
-        userToken.Callback((System.Net.Sockets.Socket) sender, userToken.State, e);
+        userToken.Callback((global::System.Net.Sockets.Socket) sender, userToken.State, e);
       } else if (e.SocketError != SocketError.HostUnreachable && e.SocketError != SocketError.ConnectionRefused) {
         ConnectAsyncExtension.ClearSocketAsyncEventArgs(e);
-        userToken.Callback((System.Net.Sockets.Socket) null, userToken.State, e);
+        userToken.Callback((global::System.Net.Sockets.Socket) null, userToken.State, e);
       } else {
-        System.Net.Sockets.Socket attempSocket;
+        global::System.Net.Sockets.Socket attempSocket;
         IPAddress nextAddress = ConnectAsyncExtension.GetNextAddress(userToken, out attempSocket);
         if (nextAddress == null) {
           ConnectAsyncExtension.ClearSocketAsyncEventArgs(e);
           e.SocketError = SocketError.HostUnreachable;
-          userToken.Callback((System.Net.Sockets.Socket) null, userToken.State, e);
+          userToken.Callback((global::System.Net.Sockets.Socket) null, userToken.State, e);
         } else {
           e.RemoteEndPoint = (EndPoint) new IPEndPoint(nextAddress, userToken.Port);
           if (attempSocket.ConnectAsync(e))
@@ -143,9 +142,9 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
     }
 
     private static void CreateAttempSocket(ConnectAsyncExtension.DnsConnectState connectState) {
-      if (System.Net.Sockets.Socket.OSSupportsIPv6)
-        connectState.Socket6 = new System.Net.Sockets.Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
-      connectState.Socket4 = new System.Net.Sockets.Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+      if (global::System.Net.Sockets.Socket.OSSupportsIPv6)
+        connectState.Socket6 = new global::System.Net.Sockets.Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
+      connectState.Socket4 = new global::System.Net.Sockets.Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
     }
 
     private class ConnectToken {
@@ -161,9 +160,9 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
 
       public int Port { get; set; }
 
-      public System.Net.Sockets.Socket Socket4 { get; set; }
+      public global::System.Net.Sockets.Socket Socket4 { get; set; }
 
-      public System.Net.Sockets.Socket Socket6 { get; set; }
+      public global::System.Net.Sockets.Socket Socket6 { get; set; }
 
       public object State { get; set; }
 

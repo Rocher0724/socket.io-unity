@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Socket.Newtonsoft.Json.Linq;
 
 namespace Socket.Quobject.SocketIoClientDotNet.Parser {
   public class Packet {

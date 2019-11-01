@@ -17,7 +17,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
       this._traceMessages = new Queue<string>();
     }
 
-    public void Trace(TraceLevel level, string message, Exception ex)
+    public void Trace_(TraceLevel level, string message, Exception ex)
     {
       if (this._traceMessages.Count >= 1000)
         this._traceMessages.Dequeue();

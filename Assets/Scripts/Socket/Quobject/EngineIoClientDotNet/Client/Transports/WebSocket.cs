@@ -4,12 +4,14 @@ using System.Diagnostics;
 using Socket.Quobject.Collections.Immutable;
 using Socket.Quobject.EngineIoClientDotNet.Modules;
 using Socket.Quobject.EngineIoClientDotNet.Parser;
-using Socket.WebSocket4Net;
+using Socket.WebSocket4Net.Default;
+using Socket.WebSocket4Net.SuperSocket.ClientEngine;
+using DataReceivedEventArgs = Socket.WebSocket4Net.Default.DataReceivedEventArgs;
 
 namespace Socket.Quobject.EngineIoClientDotNet.Client.Transports {
   public class WebSocket : Transport {
     public static readonly string NAME = "websocket";
-    private WebSocket4Net.WebSocket ws;
+    private WebSocket4Net.Default.WebSocket ws;
     private List<KeyValuePair<string, string>> Cookies;
     private List<KeyValuePair<string, string>> MyExtraHeaders;
 
@@ -26,7 +28,7 @@ namespace Socket.Quobject.EngineIoClientDotNet.Client.Transports {
 
     protected override void DoOpen() {
       LogManager.GetLogger(Global.CallerName("", 0, "")).Info("DoOpen uri =" + this.Uri());
-      this.ws = new WebSocket4Net.WebSocket(this.Uri(), "", this.Cookies, this.MyExtraHeaders, "", "",
+      this.ws = new WebSocket4Net.Default.WebSocket(this.Uri(), "", this.Cookies, this.MyExtraHeaders, "", "",
         WebSocketVersion.None);
       this.ws.EnableAutoSendPing = false;
       this.ws.Opened += new EventHandler(this.ws_Opened);

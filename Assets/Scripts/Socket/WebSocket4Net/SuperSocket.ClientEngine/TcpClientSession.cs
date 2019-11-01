@@ -76,7 +76,7 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
       }
     }
 
-    protected void ProcessConnect(System.Net.Sockets.Socket socket, object state, SocketAsyncEventArgs e) {
+    protected void ProcessConnect(global::System.Net.Sockets.Socket socket, object state, SocketAsyncEventArgs e) {
       if (e != null && e.SocketError != SocketError.Success) {
         e.Dispose();
         this.m_InConnecting = false;
@@ -107,11 +107,11 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
     protected abstract void OnGetSocket(SocketAsyncEventArgs e);
 
     protected bool EnsureSocketClosed() {
-      return this.EnsureSocketClosed((System.Net.Sockets.Socket) null);
+      return this.EnsureSocketClosed((global::System.Net.Sockets.Socket) null);
     }
 
-    protected bool EnsureSocketClosed(System.Net.Sockets.Socket prevClient) {
-      System.Net.Sockets.Socket socket = this.Client;
+    protected bool EnsureSocketClosed(global::System.Net.Sockets.Socket prevClient) {
+      global::System.Net.Sockets.Socket socket = this.Client;
       if (socket == null)
         return false;
       bool flag = true;
@@ -119,7 +119,7 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
         socket = prevClient;
         flag = false;
       } else {
-        this.Client = (System.Net.Sockets.Socket) null;
+        this.Client = (global::System.Net.Sockets.Socket) null;
         this.m_IsSending = 0;
       }
 

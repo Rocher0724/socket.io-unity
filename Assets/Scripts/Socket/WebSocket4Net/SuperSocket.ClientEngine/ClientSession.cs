@@ -11,7 +11,7 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
     private EventHandler m_Connected;
     private EventHandler<DataEventArgs> m_DataReceived;
 
-    protected System.Net.Sockets.Socket Client { get; set; }
+    protected global::System.Net.Sockets.Socket Client { get; set; }
 
     protected EndPoint RemoteEndPoint { get; set; }
 
@@ -89,7 +89,7 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
     }
 
     protected virtual void OnConnected() {
-      System.Net.Sockets.Socket client = this.Client;
+      global::System.Net.Sockets.Socket client = this.Client;
       if (client != null && client.NoDelay != this.NoDeplay)
         client.NoDelay = this.NoDeplay;
       this.IsConnected = true;

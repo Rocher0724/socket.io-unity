@@ -409,7 +409,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
                   .FormatWith((IFormatProvider) CultureInfo.InvariantCulture, (object) "$ref"), (Exception) null);
             newValue = this.Serializer.GetReferenceResolver().ResolveReference((object) this, reference);
             if (this.TraceWriter != null && this.TraceWriter.LevelFilter >= TraceLevel.Info)
-              this.TraceWriter.Trace(TraceLevel.Info,
+              this.TraceWriter.Trace_(TraceLevel.Info,
                 JsonPosition.FormatMessage((IJsonLineInfo) reader, reader.Path,
                   "Resolved object reference '{0}' to {1}.".FormatWith((IFormatProvider) CultureInfo.InvariantCulture,
                     (object) reference, (object) newValue.GetType())), (Exception) null);
@@ -489,7 +489,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
                       .FormatWith((IFormatProvider) CultureInfo.InvariantCulture, (object) "$ref"));
                 newValue = this.Serializer.GetReferenceResolver().ResolveReference((object) this, reference);
                 if (this.TraceWriter != null && this.TraceWriter.LevelFilter >= TraceLevel.Info)
-                  this.TraceWriter.Trace(TraceLevel.Info,
+                  this.TraceWriter.Trace_(TraceLevel.Info,
                     JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
                       "Resolved object reference '{0}' to {1}.".FormatWith(
                         (IFormatProvider) CultureInfo.InvariantCulture, (object) reference,
@@ -567,7 +567,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
           "Type specified in JSON '{0}' was not resolved.".FormatWith((IFormatProvider) CultureInfo.InvariantCulture,
             (object) qualifiedTypeName));
       if (this.TraceWriter != null && this.TraceWriter.LevelFilter >= TraceLevel.Verbose)
-        this.TraceWriter.Trace(TraceLevel.Verbose,
+        this.TraceWriter.Trace_(TraceLevel.Verbose,
           JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
             "Resolved type '{0}' to {1}.".FormatWith((IFormatProvider) CultureInfo.InvariantCulture,
               (object) qualifiedTypeName, (object) type)), (Exception) null);
@@ -729,7 +729,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
       property.ValueProvider.SetValue(target, obj);
       if (property.SetIsSpecified != null) {
         if (this.TraceWriter != null && this.TraceWriter.LevelFilter >= TraceLevel.Verbose)
-          this.TraceWriter.Trace(TraceLevel.Verbose,
+          this.TraceWriter.Trace_(TraceLevel.Verbose,
             JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
               "IsSpecified for property '{0}' on {1} set to true.".FormatWith(
                 (IFormatProvider) CultureInfo.InvariantCulture, (object) property.PropertyName,
@@ -795,7 +795,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
     private void AddReference(JsonReader reader, string id, object value) {
       try {
         if (this.TraceWriter != null && this.TraceWriter.LevelFilter >= TraceLevel.Verbose)
-          this.TraceWriter.Trace(TraceLevel.Verbose,
+          this.TraceWriter.Trace_(TraceLevel.Verbose,
             JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
               "Read object reference Id '{0}' for {1}.".FormatWith((IFormatProvider) CultureInfo.InvariantCulture,
                 (object) id, (object) value.GetType())), (Exception) null);
@@ -919,7 +919,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
 
     private void OnDeserializing(JsonReader reader, JsonContract contract, object value) {
       if (this.TraceWriter != null && this.TraceWriter.LevelFilter >= TraceLevel.Info)
-        this.TraceWriter.Trace(TraceLevel.Info,
+        this.TraceWriter.Trace_(TraceLevel.Info,
           JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
             "Started deserializing {0}".FormatWith((IFormatProvider) CultureInfo.InvariantCulture,
               (object) contract.UnderlyingType)), (Exception) null);
@@ -928,7 +928,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
 
     private void OnDeserialized(JsonReader reader, JsonContract contract, object value) {
       if (this.TraceWriter != null && this.TraceWriter.LevelFilter >= TraceLevel.Info)
-        this.TraceWriter.Trace(TraceLevel.Info,
+        this.TraceWriter.Trace_(TraceLevel.Info,
           JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
             "Finished deserializing {0}".FormatWith((IFormatProvider) CultureInfo.InvariantCulture,
               (object) contract.UnderlyingType)), (Exception) null);
@@ -1196,7 +1196,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
       }
 
       if (this.TraceWriter != null && this.TraceWriter.LevelFilter >= TraceLevel.Info)
-        this.TraceWriter.Trace(TraceLevel.Info,
+        this.TraceWriter.Trace_(TraceLevel.Info,
           JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
             "Deserializing {0} using ISerializable constructor.".FormatWith(
               (IFormatProvider) CultureInfo.InvariantCulture, (object) contract.UnderlyingType)), (Exception) null);
@@ -1272,7 +1272,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
         string str = string.Join(", ",
           contract.CreatorParameters.Select<JsonProperty, string>((Func<JsonProperty, string>) (p => p.PropertyName))
             .ToArray<string>());
-        this.TraceWriter.Trace(TraceLevel.Info,
+        this.TraceWriter.Trace_(TraceLevel.Info,
           JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
             "Deserializing {0} using creator with parameters: {1}.".FormatWith(
               (IFormatProvider) CultureInfo.InvariantCulture, (object) contract.UnderlyingType, (object) str)),
@@ -1430,14 +1430,14 @@ namespace Socket.Newtonsoft.Json.Serialization {
       Type objectType,
       object existingValue) {
       if (this.TraceWriter != null && this.TraceWriter.LevelFilter >= TraceLevel.Info)
-        this.TraceWriter.Trace(TraceLevel.Info,
+        this.TraceWriter.Trace_(TraceLevel.Info,
           JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
             "Started deserializing {0} with converter {1}.".FormatWith((IFormatProvider) CultureInfo.InvariantCulture,
               (object) objectType, (object) converter.GetType())), (Exception) null);
       object obj = converter.ReadJson(reader, objectType, existingValue, (JsonSerializer) this.GetInternalSerializer());
       if (this.TraceWriter == null || this.TraceWriter.LevelFilter < TraceLevel.Info)
         return obj;
-      this.TraceWriter.Trace(TraceLevel.Info,
+      this.TraceWriter.Trace_(TraceLevel.Info,
         JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
           "Finished deserializing {0} with converter {1}.".FormatWith((IFormatProvider) CultureInfo.InvariantCulture,
             (object) objectType, (object) converter.GetType())), (Exception) null);
@@ -1484,7 +1484,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
                   "Unexpected end when setting {0}'s value.".FormatWith((IFormatProvider) CultureInfo.InvariantCulture,
                     (object) propertyName));
               if (this.TraceWriter != null && this.TraceWriter.LevelFilter >= TraceLevel.Verbose)
-                this.TraceWriter.Trace(TraceLevel.Verbose,
+                this.TraceWriter.Trace_(TraceLevel.Verbose,
                   JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
                     "Could not find member '{0}' on {1}.".FormatWith((IFormatProvider) CultureInfo.InvariantCulture,
                       (object) propertyName, (object) contract.UnderlyingType)), (Exception) null);
@@ -1620,7 +1620,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
                 JsonProperty closestMatchProperty = contract.Properties.GetClosestMatchProperty(str);
                 if (closestMatchProperty == null) {
                   if (this.TraceWriter != null && this.TraceWriter.LevelFilter >= TraceLevel.Verbose)
-                    this.TraceWriter.Trace(TraceLevel.Verbose,
+                    this.TraceWriter.Trace_(TraceLevel.Verbose,
                       JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
                         "Could not find member '{0}' on {1}".FormatWith((IFormatProvider) CultureInfo.InvariantCulture,
                           (object) str, (object) contract.UnderlyingType)), (Exception) null);
@@ -1701,7 +1701,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
         return true;
       bool flag = property.ShouldDeserialize(target);
       if (this.TraceWriter != null && this.TraceWriter.LevelFilter >= TraceLevel.Verbose)
-        this.TraceWriter.Trace(TraceLevel.Verbose,
+        this.TraceWriter.Trace_(TraceLevel.Verbose,
           JsonPosition.FormatMessage((IJsonLineInfo) null, reader.Path,
             "ShouldDeserialize result for property '{0}' on {1}: {2}".FormatWith(
               (IFormatProvider) CultureInfo.InvariantCulture, (object) property.PropertyName,

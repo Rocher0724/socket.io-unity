@@ -20,7 +20,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
       }
     }
 
-    public void Trace(TraceLevel level, string message, Exception ex) {
+    public void Trace_(TraceLevel level, string message, Exception ex) {
       if (level == TraceLevel.Off)
         return;
       TraceEventCache eventCache = new TraceEventCache();

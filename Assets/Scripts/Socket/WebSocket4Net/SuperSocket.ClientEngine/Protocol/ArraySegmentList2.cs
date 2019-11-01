@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace Socket.WebSocket4Net.SuperSocket.ClientEngine.Protocol {
   public class ArraySegmentList<T> : IList<T>, ICollection<T>, IEnumerable<T>, IEnumerable

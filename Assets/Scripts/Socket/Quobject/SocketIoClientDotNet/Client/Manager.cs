@@ -33,7 +33,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
     private int Attempts;
     private Uri Uri;
     private List<Packet> PacketBuffer;
-    private ConcurrentQueue<On.IHandle> Subs;
+    private ConcurrentQueue<ClientOn.IHandle> Subs;
     private Quobject.EngineIoClientDotNet.Client.Socket.Options Opts;
     private bool AutoConnect;
     private HashSet<Socket> OpeningSockets;
@@ -62,7 +62,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
         opts.Path = "/socket.io";
       this.Opts = (Quobject.EngineIoClientDotNet.Client.Socket.Options) opts;
       this.Nsps = ImmutableDictionary.Create<string, Socket>();
-      this.Subs = new ConcurrentQueue<On.IHandle>();
+      this.Subs = new ConcurrentQueue<ClientOn.IHandle>();
       this.Reconnection(opts.Reconnection);
       this.ReconnectionAttempts(opts.ReconnectionAttempts != 0 ? opts.ReconnectionAttempts : int.MaxValue);
       this.ReconnectionDelay(opts.ReconnectionDelay != 0L ? opts.ReconnectionDelay : 1000L);
@@ -155,14 +155,14 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       this.ReadyState = Manager.ReadyStateEnum.OPENING;
       this.OpeningSockets.Add(this.Socket(this.Uri.PathAndQuery));
       this.SkipReconnect = false;
-      On.IHandle openSub = On.Create((Emitter) socket, EngineIoClientDotNet.Client.Socket.EVENT_OPEN,
+      ClientOn.IHandle openSub = ClientOn.Create((Emitter) socket, EngineIoClientDotNet.Client.Socket.EVENT_OPEN,
         (IListener) new ListenerImpl((ActionTrigger) (() => {
           this.OnOpen();
           if (fn == null)
             return;
           fn.Call((Exception) null);
         })));
-      On.IHandle handle = On.Create((Emitter) socket, EngineIoClientDotNet.Client.Socket.EVENT_ERROR,
+      ClientOn.IHandle handle = ClientOn.Create((Emitter) socket, EngineIoClientDotNet.Client.Socket.EVENT_ERROR,
         (IListener) new ListenerImpl((Action<object>) (data => {
           log.Info("connect_error");
           this.Cleanup();
@@ -177,7 +177,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       if (this._timeout >= 0L && this.ReadyState == Manager.ReadyStateEnum.CLOSED) {
         int timeout = (int) this._timeout;
         log.Info(string.Format("connection attempt will timeout after {0}", (object) timeout));
-        this.Subs.Enqueue((On.IHandle) new On.ActionHandleImpl(new ActionTrigger(EasyTimer
+        this.Subs.Enqueue((ClientOn.IHandle) new ClientOn.ActionHandleImpl(new ActionTrigger(EasyTimer
           .SetTimeout((ActionTrigger) (() => {
             LogManager logger = LogManager.GetLogger(Global.CallerName("", 0, ""));
             logger.Info("Manager Open start");
@@ -203,7 +203,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       this.ReadyState = Manager.ReadyStateEnum.OPEN;
       this.Emit(Manager.EVENT_OPEN);
       Quobject.EngineIoClientDotNet.Client.Socket engineSocket = this.EngineSocket;
-      this.Subs.Enqueue(On.Create((Emitter) engineSocket, Quobject.EngineIoClientDotNet.Client.Socket.EVENT_DATA,
+      this.Subs.Enqueue(ClientOn.Create((Emitter) engineSocket, Quobject.EngineIoClientDotNet.Client.Socket.EVENT_DATA,
         (IListener) new ListenerImpl((Action<object>) (data => {
           if (data is string) {
             this.OnData((string) data);
@@ -213,11 +213,11 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
             this.Ondata((byte[]) data);
           }
         }))));
-      this.Subs.Enqueue(On.Create((Emitter) this.Decoder, "decoded",
+      this.Subs.Enqueue(ClientOn.Create((Emitter) this.Decoder, "decoded",
         (IListener) new ListenerImpl((Action<object>) (data => this.OnDecoded((Packet) data)))));
-      this.Subs.Enqueue(On.Create((Emitter) engineSocket, Quobject.EngineIoClientDotNet.Client.Socket.EVENT_ERROR,
+      this.Subs.Enqueue(ClientOn.Create((Emitter) engineSocket, Quobject.EngineIoClientDotNet.Client.Socket.EVENT_ERROR,
         (IListener) new ListenerImpl((Action<object>) (data => this.OnError((Exception) data)))));
-      this.Subs.Enqueue(On.Create((Emitter) engineSocket, Quobject.EngineIoClientDotNet.Client.Socket.EVENT_CLOSE,
+      this.Subs.Enqueue(ClientOn.Create((Emitter) engineSocket, Quobject.EngineIoClientDotNet.Client.Socket.EVENT_CLOSE,
         (IListener) new ListenerImpl((Action<object>) (data => this.OnClose((string) data)))));
     }
 
@@ -283,7 +283,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
     }
 
     private void Cleanup() {
-      On.IHandle handle;
+      ClientOn.IHandle handle;
       while (this.Subs.TryDequeue(out handle))
         handle.Destroy();
     }
@@ -323,7 +323,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
         long num = Math.Min((long) this.Attempts * this.ReconnectionDelay(), this.ReconnectionDelayMax());
         log.Info(string.Format("will wait {0}ms before reconnect attempt", (object) num));
         this.Reconnecting = true;
-        this.Subs.Enqueue((On.IHandle) new On.ActionHandleImpl(new ActionTrigger(EasyTimer
+        this.Subs.Enqueue((ClientOn.IHandle) new ClientOn.ActionHandleImpl(new ActionTrigger(EasyTimer
           .SetTimeout((ActionTrigger) (() => {
             LogManager logger = LogManager.GetLogger(Global.CallerName("", 0, ""));
             logger.Info("EasyTimer Reconnect start");

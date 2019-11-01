@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Socket.Newtonsoft.Json.Linq;
 using Socket.Newtonsoft.Json.Utilities;
+using Socket.Newtonsoft.Json.Utilities.LinqBridge;
 
 namespace Socket.Newtonsoft.Json.Schema {
   [Obsolete(

@@ -665,7 +665,7 @@ public class JsonSerializer
       TraceJsonReader traceJsonReader = this.TraceWriter == null || this.TraceWriter.LevelFilter < TraceLevel.Verbose ? (TraceJsonReader) null : new TraceJsonReader(reader);
       new JsonSerializerInternalReader(this).Populate((JsonReader) traceJsonReader ?? reader, target);
       if (traceJsonReader != null)
-        this.TraceWriter.Trace(TraceLevel.Verbose, traceJsonReader.GetDeserializedJsonMessage(), (Exception) null);
+        this.TraceWriter.Trace_(TraceLevel.Verbose, traceJsonReader.GetDeserializedJsonMessage(), (Exception) null);
       this.ResetReader(reader, previousCulture, previousDateTimeZoneHandling, previousDateParseHandling, previousFloatParseHandling, previousMaxDepth, previousDateFormatString);
     }
 
@@ -702,7 +702,7 @@ public class JsonSerializer
       TraceJsonReader traceJsonReader = this.TraceWriter == null || this.TraceWriter.LevelFilter < TraceLevel.Verbose ? (TraceJsonReader) null : new TraceJsonReader(reader);
       object obj = new JsonSerializerInternalReader(this).Deserialize((JsonReader) traceJsonReader ?? reader, objectType, this.CheckAdditionalContent);
       if (traceJsonReader != null)
-        this.TraceWriter.Trace(TraceLevel.Verbose, traceJsonReader.GetDeserializedJsonMessage(), (Exception) null);
+        this.TraceWriter.Trace_(TraceLevel.Verbose, traceJsonReader.GetDeserializedJsonMessage(), (Exception) null);
       this.ResetReader(reader, previousCulture, previousDateTimeZoneHandling, previousDateParseHandling, previousFloatParseHandling, previousMaxDepth, previousDateFormatString);
       return obj;
     }
@@ -919,7 +919,7 @@ label_19:
       TraceJsonWriter traceJsonWriter = this.TraceWriter == null || this.TraceWriter.LevelFilter < TraceLevel.Verbose ? (TraceJsonWriter) null : new TraceJsonWriter(jsonWriter);
       new JsonSerializerInternalWriter(this).Serialize((JsonWriter) traceJsonWriter ?? jsonWriter, value, objectType);
       if (traceJsonWriter != null)
-        this.TraceWriter.Trace(TraceLevel.Verbose, traceJsonWriter.GetSerializedJsonMessage(), (Exception) null);
+        this.TraceWriter.Trace_(TraceLevel.Verbose, traceJsonWriter.GetSerializedJsonMessage(), (Exception) null);
       if (nullable1.HasValue)
         jsonWriter.Formatting = nullable1.GetValueOrDefault();
       if (nullable2.HasValue)

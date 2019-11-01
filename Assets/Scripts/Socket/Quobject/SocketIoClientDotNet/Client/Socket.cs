@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Socket.Newtonsoft.Json.Linq;
 using Socket.Quobject.Collections.Immutable;
 using Socket.Quobject.EngineIoClientDotNet.ComponentEmitter;
 using Socket.Quobject.EngineIoClientDotNet.Modules;
@@ -41,7 +42,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
     private int Ids;
     private string Nsp;
     private Manager _io;
-    private ImmutableQueue<On.IHandle> Subs;
+    private ImmutableQueue<ClientOn.IHandle> Subs;
 
     public Socket(Manager io, string nsp) {
       this._io = io;
@@ -51,12 +52,12 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
 
     private void SubEvents() {
       Manager io = this._io;
-      this.Subs = ImmutableQueue.Create<On.IHandle>();
-      this.Subs = this.Subs.Enqueue(On.Create((Emitter) io, Manager.EVENT_OPEN,
+      this.Subs = ImmutableQueue.Create<ClientOn.IHandle>();
+      this.Subs = this.Subs.Enqueue(ClientOn.Create((Emitter) io, Manager.EVENT_OPEN,
         (IListener) new ListenerImpl(new ActionTrigger(this.OnOpen))));
-      this.Subs = this.Subs.Enqueue(On.Create((Emitter) io, Manager.EVENT_PACKET,
+      this.Subs = this.Subs.Enqueue(ClientOn.Create((Emitter) io, Manager.EVENT_PACKET,
         (IListener) new ListenerImpl((Action<object>) (data => this.OnPacket((Packet) data)))));
-      this.Subs = this.Subs.Enqueue(On.Create((Emitter) io, Manager.EVENT_CLOSE,
+      this.Subs = this.Subs.Enqueue(ClientOn.Create((Emitter) io, Manager.EVENT_CLOSE,
         (IListener) new ListenerImpl((Action<object>) (data => this.OnClose((string) data)))));
     }
 
@@ -103,7 +104,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       }
 
       if (this.Connected)
-        this.Packet(packet);
+        this.Packet_method(packet);
       else
         this.SendBuffer = this.SendBuffer.Enqueue(packet);
       return (Emitter) this;
@@ -120,7 +121,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       logger.Info(string.Format("emitting packet with ack id {0}", (object) this.Ids));
       this.Acks = this.Acks.Add(this.Ids, ack);
       packet.Id = this.Ids++;
-      this.Packet(packet);
+      this.Packet_method(packet);
       return (Emitter) this;
     }
 
@@ -146,7 +147,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       return this.Emit(eventString, (IAck) new AckImpl(ack), args);
     }
 
-    public void Packet(Packet packet) {
+    public void Packet_method(Packet packet) {
       packet.Nsp = this.Nsp;
       this._io.Packet(packet);
     }
@@ -154,7 +155,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
     private void OnOpen() {
       if (!(this.Nsp != "/"))
         return;
-      this.Packet(new Packet(0));
+      this.Packet_method(new Packet(0));
     }
 
     private void OnClose(string reason) {
@@ -234,7 +235,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       while (!this.ReceiveBuffer.IsEmpty) {
         Packet packet;
         this.SendBuffer = this.SendBuffer.Dequeue(out packet);
-        this.Packet(packet);
+        this.Packet_method(packet);
       }
 
       this.SendBuffer = this.SendBuffer.Clear();
@@ -248,7 +249,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
     }
 
     private void Destroy() {
-      foreach (On.IHandle sub in this.Subs)
+      foreach (ClientOn.IHandle sub in this.Subs)
         sub.Destroy();
       this.Subs = this.Subs.Clear();
       this._io.Destroy(this);
@@ -258,7 +259,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
       LogManager logger = LogManager.GetLogger(Global.CallerName("", 0, ""));
       if (this.Connected) {
         logger.Info(string.Format("performing disconnect ({0})", (object) this.Nsp));
-        this.Packet(new Packet(1));
+        this.Packet_method(new Packet(1));
       }
 
       this.Destroy();
@@ -309,7 +310,7 @@ namespace Socket.Quobject.SocketIoClientDotNet.Client {
         LogManager logger = LogManager.GetLogger(Global.CallerName("", 0, ""));
         JArray jarray = Packet.Args2JArray((IEnumerable<object>) args);
         logger.Info(string.Format("sending ack {0}", args.Length != 0 ? (object) jarray.ToString() : (object) "null"));
-        this.socket.Packet(new Packet(HasBinaryData.HasBinary((object) args) ? 6 : 3, (object) jarray) {
+        this.socket.Packet_method(new Packet(HasBinaryData.HasBinary((object) args) ? 6 : 3, (object) jarray) {
           Id = this.Id
         });
       }

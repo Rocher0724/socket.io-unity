@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Socket.WebSocket4Net;
 using System.Collections;
+using Socket.WebSocket4Net.System.Linq;
 using UnityEngine;
 
 namespace Socket.Quobject.Collections.Immutable {

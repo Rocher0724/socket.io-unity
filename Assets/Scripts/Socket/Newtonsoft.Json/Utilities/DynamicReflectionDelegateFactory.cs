@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using Socket.Newtonsoft.Json.Serialization;
 using UnityEngine.Experimental.UIElements;
+using Label = System.Reflection.Emit.Label;
 
 namespace Socket.Newtonsoft.Json.Utilities {
   internal class DynamicReflectionDelegateFactory : ReflectionDelegateFactory {
@@ -15,7 +16,7 @@ namespace Socket.Newtonsoft.Json.Utilities {
       get { return DynamicReflectionDelegateFactory._instance; }
     }
 
-    private static DynamicMethod CreateDynamicMethod(
+    private static global::System.Reflection.Emit.DynamicMethod CreateDynamicMethod(
       string name,
       Type returnType,
       Type[] parameterTypes,

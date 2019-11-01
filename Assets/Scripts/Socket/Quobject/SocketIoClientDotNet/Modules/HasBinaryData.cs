@@ -1,3 +1,5 @@
+using Socket.Newtonsoft.Json.Linq;
+
 namespace Socket.Quobject.SocketIoClientDotNet.Modules {
   public static class HasBinaryData
   {

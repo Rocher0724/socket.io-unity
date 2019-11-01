@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\visualcamp-zeon\.Rider2019.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\visualcamp-zeon\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_anyTest.883869132.00" t="ExcludeRecursive" />
-    <e p="D:\dean\anyTest" t="IncludeRecursive">
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="anyTest.sln" t="IncludeFlat" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
           <e p="Socket" t="Include">
-            <e p="JArray.cs" t="Include" />
             <e p="Newtonsoft.Json" t="Include">
               <e p="Bson" t="Include">
                 <e p="BsonArray.cs" t="Include" />
@@ -300,11 +297,11 @@
               <e p="SocketIoClientDotNet" t="Include">
                 <e p="Client" t="Include">
                   <e p="AckImpl.cs" t="Include" />
+                  <e p="ClientOn.cs" t="Include" />
                   <e p="Engine.cs" t="Include" />
                   <e p="IAck.cs" t="Include" />
                   <e p="IO.cs" t="Include" />
                   <e p="Manager.cs" t="Include" />
-                  <e p="On.cs" t="Include" />
                   <e p="Options.cs" t="Include" />
                   <e p="Socket.cs" t="Include" />
                   <e p="SocketIOException.cs" t="Include" />
@@ -322,15 +319,69 @@
               </e>
             </e>
             <e p="WebSocket4Net" t="Include">
+              <e p="Command" t="Include">
+                <e p="BadRequest.cs" t="Include" />
+                <e p="Binary.cs" t="Include" />
+                <e p="Close.cs" t="Include" />
+                <e p="Handshake.cs" t="Include" />
+                <e p="Ping.cs" t="Include" />
+                <e p="Pong.cs" t="Include" />
+                <e p="Text.cs" t="Include" />
+                <e p="WebSocketCommandBase.cs" t="Include" />
+              </e>
               <e p="CompilerServices" t="Include">
                 <e p="ExtensionAttribute.cs" t="Include" />
               </e>
               <e p="CompilerServices.SuperSocket" t="Include">
                 <e p="ExtensionAttibute.cs" t="Include" />
               </e>
-              <e p="DelegateComparer.cs" t="Include" />
-              <e p="LINQ.cs" t="Include" />
-              <e p="MessageReceivedEventArgs.cs" t="Include" />
+              <e p="Default" t="Include">
+                <e p="ClosedEventArgs.cs" t="Include" />
+                <e p="DataReceivedEventArgs.cs" t="Include" />
+                <e p="Extensions.cs" t="Include" />
+                <e p="IJsonExecutor.cs" t="Include" />
+                <e p="JsonExecutor.cs" t="Include" />
+                <e p="JsonExecutorBase.cs" t="Include" />
+                <e p="JsonExecutorFull.cs" t="Include" />
+                <e p="JsonExecutorWithSender.cs" t="Include" />
+                <e p="JsonExecutorWithSenderAndState.cs" t="Include" />
+                <e p="JsonExecutorWithToken.cs" t="Include" />
+                <e p="JsonWebSocket.cs" t="Include" />
+                <e p="MessageReceivedEventArgs.cs" t="Include" />
+                <e p="OpCode.cs" t="Include" />
+                <e p="WebSocket.cs" t="Include" />
+                <e p="WebSocketCommandInfo.cs" t="Include" />
+                <e p="WebSocketContext.cs" t="Include" />
+                <e p="WebSocketState.cs" t="Include" />
+                <e p="WebSocketStateConst.cs" t="Include" />
+                <e p="WebSocketVersion.cs" t="Include" />
+              </e>
+              <e p="Protocol" t="Include">
+                <e p="CloseStatusCodeHybi10.cs" t="Include" />
+                <e p="CloseStatusCodeRfc6455.cs" t="Include" />
+                <e p="DraftHybi00DataReader.cs" t="Include" />
+                <e p="DraftHybi00HandshakeReader.cs" t="Include" />
+                <e p="DraftHybi00Processor.cs" t="Include" />
+                <e p="DraftHybi10DataReader.cs" t="Include" />
+                <e p="DraftHybi10HandshakeReader.cs" t="Include" />
+                <e p="DraftHybi10Processor.cs" t="Include" />
+                <e p="FramePartReader" t="Include">
+                  <e p="DataFramePartReader.cs" t="Include" />
+                  <e p="ExtendedLenghtReader.cs" t="Include" />
+                  <e p="FixPartReader.cs" t="Include" />
+                  <e p="IDataFramePartReader.cs" t="Include" />
+                  <e p="MaskKeyReader.cs" t="Include" />
+                  <e p="PayloadDataReader.cs" t="Include" />
+                </e>
+                <e p="HandshakeReader.cs" t="Include" />
+                <e p="ICloseStatusCode.cs" t="Include" />
+                <e p="IProtocolProcessor.cs" t="Include" />
+                <e p="ProtocolProcessorBase.cs" t="Include" />
+                <e p="ProtocolProcessorFactory.cs" t="Include" />
+                <e p="ReaderBase.cs" t="Include" />
+                <e p="Rfc6455Processor.cs" t="Include" />
+                <e p="WebSocketDataFrame.cs" t="Include" />
+              </e>
               <e p="SuperSocket.ClientEngine" t="Include">
                 <e p="AsyncTcpSession.cs" t="Include" />
                 <e p="ClientSession.cs" t="Include" />
@@ -366,16 +417,31 @@
                 <e p="SslStreamTcpSession.cs" t="Include" />
                 <e p="TcpClientSession.cs" t="Include" />
               </e>
-              <e p="WebSocket.cs" t="Include" />
-              <e p="WebSocketVersion.cs" t="Include" />
+              <e p="System" t="Include">
+                <e p="Collections" t="Include">
+                  <e p="ConcurrentQueue.cs" t="Include" />
+                </e>
+                <e p="LINQ" t="Include">
+                  <e p="DelegateComparer.cs" t="Include" />
+                  <e p="LINQ.cs" t="Include" />
+                </e>
+                <e p="Net" t="Include">
+                  <e p="DnsEndPoint.cs" t="Include" />
+                </e>
+              </e>
             </e>
           </e>
           <e p="TestObject.cs" t="Include" />
         </e>
       </e>
+      <e p="Library" t="ExcludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
-      <e p="Temp\bin" t="ExcludeRecursive" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
     </e>
+    <e p="$USER_HOME$/Library/Caches/Rider2018.3/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2018.3/resharper-host/local/Transient/ReSharperHost/v183/SolutionCaches/_anyTest.-2085332878.00" t="ExcludeRecursive" />
   </component>
 </project>

@@ -5,6 +5,6 @@ namespace Socket.Newtonsoft.Json.Serialization {
   public interface ITraceWriter {
     TraceLevel LevelFilter { get; }
 
-    void Trace(TraceLevel level, string message, Exception ex);
+    void Trace_(TraceLevel level, string message, Exception ex);
   }
 }

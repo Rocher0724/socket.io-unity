@@ -20,7 +20,7 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
 
     protected override void SocketEventArgsCompleted(object sender, SocketAsyncEventArgs e) {
       if (e.LastOperation == SocketAsyncOperation.Connect)
-        this.ProcessConnect(sender as System.Net.Sockets.Socket, (object) null, e);
+        this.ProcessConnect(sender as global::System.Net.Sockets.Socket, (object) null, e);
       else
         this.ProcessReceive(e);
     }
@@ -65,7 +65,7 @@ namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
     }
 
     private void StartReceive() {
-      System.Net.Sockets.Socket client = this.Client;
+      global::System.Net.Sockets.Socket client = this.Client;
       if (client == null)
         return;
       bool async;

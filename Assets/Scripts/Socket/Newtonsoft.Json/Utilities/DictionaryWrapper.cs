@@ -283,9 +283,9 @@ namespace Socket.Newtonsoft.Json.Utilities {
       public object Current {
         get {
           KeyValuePair<TEnumeratorKey, TEnumeratorValue> current = this._e.Current;
-          __Boxed<TEnumeratorKey> key = (object) current.Key;
+          var key = (object) current.Key;
           current = this._e.Current;
-          __Boxed<TEnumeratorValue> local = (object) current.Value;
+          var local = (object) current.Value;
           return (object) new DictionaryEntry((object) key, (object) local);
         }
       }

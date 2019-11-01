@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Socket.Newtonsoft.Json.Linq;
 using Socket.Quobject.EngineIoClientDotNet.ComponentEmitter;
 using Socket.Quobject.EngineIoClientDotNet.Modules;
 using Socket.Quobject.SocketIoClientDotNet.Client;

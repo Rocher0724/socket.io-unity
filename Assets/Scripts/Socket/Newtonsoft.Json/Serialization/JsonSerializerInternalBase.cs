@@ -65,7 +65,7 @@ namespace Socket.Newtonsoft.Json.Serialization {
         string message = str + ". " + ex.Message;
         if (!(ex is JsonException))
           message = JsonPosition.FormatMessage(lineInfo, path, message);
-        this.TraceWriter.Trace(TraceLevel.Error, message, ex);
+        this.TraceWriter.Trace_(TraceLevel.Error, message, ex);
       }
 
       if (contract != null && currentObject != null)

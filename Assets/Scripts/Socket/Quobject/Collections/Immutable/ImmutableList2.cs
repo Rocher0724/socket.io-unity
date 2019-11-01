@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Socket.WebSocket4Net;
+using Socket.WebSocket4Net.System.Linq;
 
 namespace Socket.Quobject.Collections.Immutable {
   public static class ImmutableList

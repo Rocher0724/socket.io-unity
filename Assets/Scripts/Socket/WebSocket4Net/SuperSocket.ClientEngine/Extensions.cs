@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Runtime.CompilerServices;
+using Socket.WebSocket4Net.CompilerServices;
 
 namespace Socket.WebSocket4Net.SuperSocket.ClientEngine {
-  [Extension]
   public static class Extensions {
     private static Random m_Random = new Random();
 
