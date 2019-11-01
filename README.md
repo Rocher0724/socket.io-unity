@@ -1,7 +1,5 @@
 # socket.io-unity
 
----
-
 on NOV. 1. 2019
 
 Socket.IO Client Library for Unity (mono / .NET 4.x)
