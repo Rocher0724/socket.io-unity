@@ -4,7 +4,7 @@ on NOV. 1. 2019
 
 Socket.IO Client Library for Unity (mono / .NET 4.x)
 
-[socket.io-unity](https://github.com/floatinghotpot/socket.io-unity) by floatinghotpot is a very good project, but it had some problems with me. For example in the use of Action or Func. Exactly I can't use uniRx. 
+[socket.io-unity](https://github.com/floatinghotpot/socket.io-unity) by floatinghotpot is a very good project, but it had some problems with me. For example in the use of Action or Func. Exactly I could not use UniRx. 
 
 
 ## Installation
