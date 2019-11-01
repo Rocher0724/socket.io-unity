@@ -56,12 +56,12 @@ This library supports all of the features the JS client does, including events, 
 
 ## Framework Versions
 
-Mono
-.NET 4.x 
+ - Mono
 
-> Unity project setting - Scripting Runtime Version : .NET 4.x Equivalent
-> Unity project setting - Api Compatibility Level : .NET 4.x
-> Unity Editor restart
+ - .NET 4.x 
+    - Unity project setting - Scripting Runtime Version : .NET 4.x Equivalent
+    - Unity project setting - Api Compatibility Level : .NET 4.x
+    - Unity Editor restart
 
 ## Demo
 
