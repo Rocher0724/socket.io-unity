@@ -1,7 +1,7 @@
 
 # socket.io-unity
 
-on July. 7. 2020
+on May. 4. 2021
 
 Socket.IO Client Library for Unity (mono / .NET 4.x, Unity 2019.4.2.f1 LTS)
 
@@ -105,6 +105,12 @@ Thanks to the authors of following projects:
 * [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) by JamesNK, a popular high-performance JSON framework for .NET
 * [floatinghotpot](https://github.com/floatinghotpot/socket.io-unity) by Raymond Xie, a Socket.IO Client Library for Unity
 
+
+## Known Bug
+
+npm module socket 2.0.4 reports a connection failure.
+
+I used to use 1.7.4.
 
 
 # Another Choice 
