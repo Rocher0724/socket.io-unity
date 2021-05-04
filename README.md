@@ -115,4 +115,8 @@ NHN is a South Korean IT conglomerate.
 
 The development version of this project has been developed until relatively recently.
 
-I needed more from this project, so I used [floatinghotpot](https://github.com/floatinghotpot/socket.io-unity), and the NHN unity socket client might be a better choice for you.
+I needed more from NHN unity socket, so I used [floatinghotpot](https://github.com/floatinghotpot/socket.io-unity), and the NHN unity socket client might be a better choice for you.
+
+Try to use once.
+
+
