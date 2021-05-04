@@ -1,10 +1,11 @@
+
 # socket.io-unity
 
 on July. 7. 2020
 
 Socket.IO Client Library for Unity (mono / .NET 4.x, Unity 2019.4.2.f1 LTS)
 
-[socket.io-unity](https://github.com/floatinghotpot/socket.io-unity) by floatinghotpot is a very good project, but it had some problems with me. For example in the use of Action or Func. Exactly I could not use UniRx. 
+[socket.io-unity](https://github.com/floatinghotpot/socket.io-unity) by floatinghotpot is a very good project, but it had some problems with me. For example in the use of Action or Func. Exactly I could not use UniRx.
 
 
 ## Installation
@@ -83,12 +84,12 @@ This library supports all of the features the JS client does, including events, 
 
 ## Framework Versions
 
- - Mono
+- Mono
 
- - .NET 4.x 
-   - Unity project setting - Scripting Runtime Version : .NET 4.x Equivalent
-   - Unity project setting - Api Compatibility Level : .NET 4.x
-   - Unity Editor restart
+- .NET 4.x
+    - Unity project setting - Scripting Runtime Version : .NET 4.x Equivalent
+    - Unity project setting - Api Compatibility Level : .NET 4.x
+    - Unity Editor restart
 
 ## Demo
 
@@ -103,3 +104,15 @@ Thanks to the authors of following projects:
 * [WebSocket4Net](https://github.com/kerryjiang/WebSocket4Net) by Kerry Jiang, a .NET websocket client implementation.
 * [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) by JamesNK, a popular high-performance JSON framework for .NET
 * [floatinghotpot](https://github.com/floatinghotpot/socket.io-unity) by Raymond Xie, a Socket.IO Client Library for Unity
+
+
+
+# Another Choice 
+
+> [NHN Unity socketio client](https://github.com/nhn/socket.io-client-unity3d)  
+
+NHN is a South Korean IT conglomerate.
+
+The development version of this project has been developed until relatively recently.
+
+I needed more from this project, so I used [floatinghotpot](https://github.com/floatinghotpot/socket.io-unity), and the NHN unity socket client might be a better choice for you.
